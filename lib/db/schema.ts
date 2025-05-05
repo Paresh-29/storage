@@ -23,7 +23,7 @@ export const files = pgTable("files", {
 
   // owner info
   userId: text("user_id").notNull(), // user id of the owner
-  parentId: uuid("parent_id").notNull(), // parent folder id nullable for root folder
+  parentId: uuid("parent_id"), // parent folder id nullable for root folder
 
   // file/folder flags
   isFolder: boolean("is_folder").notNull().default(false), // is this a folder
