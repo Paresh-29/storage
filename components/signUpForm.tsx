@@ -13,6 +13,7 @@ import { Card, CardHeader, CardBody, CardFooter } from "@heroui/card";
 import { Divider } from "@heroui/divider";
 import { Button } from "@heroui/button";
 import { Input } from "@heroui/input";
+import { InputOtp } from "@heroui/input-otp";
 import { Mail, Lock, AlertCircle, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 
@@ -23,7 +24,7 @@ export default function SignUpForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [authError, setAuthError] = useState<string | null>(null);
   const [verificationError, setVerificationError] = useState<string | null>(
-    null,
+    null
   );
   const [verificationCode, setVerificationCode] = useState("");
   const { signUp, isLoaded, setActive } = useSignUp();
@@ -66,7 +67,7 @@ export default function SignUpForm() {
       console.error("Error during sign up:", error);
       setAuthError(
         error.errors?.[0]?.message ||
-          "An unknown error occurred. Please try again.",
+          "An unknown error occurred. Please try again."
       );
     } finally {
       setIsSubmitting(false);
@@ -74,7 +75,7 @@ export default function SignUpForm() {
   };
 
   const handleVerificationSubmit = async (
-    e: React.FormEvent<HTMLFormElement>,
+    e: React.FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
     if (!isLoaded && !signUp) {
@@ -95,14 +96,14 @@ export default function SignUpForm() {
       } else {
         console.error("Verification failed:", result);
         setVerificationError(
-          "Verification failed. Please check your code and try again.",
+          "Verification failed. Please check your code and try again."
         );
       }
     } catch (error: any) {
       console.error("Error during verification:", error);
       setVerificationError(
         error.errors?.[0]?.message ||
-          "An unknown error occurred. Please try again.",
+          "An unknown error occurred. Please try again."
       );
     } finally {
       setIsSubmitting(false);
@@ -131,15 +132,15 @@ export default function SignUpForm() {
               </AlertCircle>
             </div>
           )}
-          <form onSubmit={handleVerificationSubmit} className="spac-y-6">
-            <div className="space-y-2">
+          <form onSubmit={handleVerificationSubmit} className="space-y-6">
+            <div className="flex flex-col items-center space-y-4">
               <label
                 htmlFor="verificationCode"
                 className="text-sm font-medium text-default-900"
               >
-                Verification Code
+                Enter Your Verification Code
               </label>
-              <input
+              {/* <input
                 id="verificationCode"
                 type="text"
                 placeholder="Enter your verification code"
@@ -148,6 +149,16 @@ export default function SignUpForm() {
                 className="w-full"
                 disabled={isSubmitting}
                 autoFocus
+              /> */}
+              <InputOtp
+                id="verificationCode"
+                type="password"
+                value={verificationCode}
+                onChange={(e) => setVerificationCode(e.target.value)}
+                length={6}
+                radius="full"
+                size="md"
+                variant="bordered"
               />
             </div>
 
@@ -297,7 +308,7 @@ export default function SignUpForm() {
             className="w-full"
             isLoading={isSubmitting}
           >
-            {isSubmitting ? "Creating..." : "Creare Account"}
+            {isSubmitting ? "Creating..." : "Create Account"}
           </Button>
         </form>
       </CardBody>
